@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/DigitalCoin/static/css/main.eb772e96.css",
-    "main.js": "/DigitalCoin/static/js/main.1e095bba.js",
+    "main.js": "/DigitalCoin/static/js/main.490d126e.js",
     "static/media/digitalcoin.gif": "/DigitalCoin/static/media/digitalcoin.24d90149b2281c86e6c1.gif",
     "index.html": "/DigitalCoin/index.html",
     "main.eb772e96.css.map": "/DigitalCoin/static/css/main.eb772e96.css.map",
-    "main.1e095bba.js.map": "/DigitalCoin/static/js/main.1e095bba.js.map"
+    "main.490d126e.js.map": "/DigitalCoin/static/js/main.490d126e.js.map"
   },
   "entrypoints": [
     "static/css/main.eb772e96.css",
-    "static/js/main.1e095bba.js"
+    "static/js/main.490d126e.js"
   ]
 }
