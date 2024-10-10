@@ -1,48 +1,43 @@
-// src/components/Friends.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const Friends = ({ coins, setCoins }) => {
-  const referralLink = "https://example.com/referral"; // Здесь должен быть твой реферальный линк
-  const [friendCode, setFriendCode] = useState('');
-  const [invitationSent, setInvitationSent] = useState(false);
+// Пример функции для получения количества приглашенных пользователей из базы данных
+const fetchInvitedCount = async (userId) => {
+  // Здесь должен быть код для запроса к вашей базе данных
+  // Пример с использованием fetch:
+  const response = await fetch(`/api/invitedCount?userId=${userId}`);
+  const data = await response.json();
+  return data.count;
+};
+
+const Friends = ({ userId, coins, setCoins }) => {
+  const [referralLink, setReferralLink] = useState('');
+  const [invitedCount, setInvitedCount] = useState(0);
+
+  useEffect(() => {
+    // Генерируем реферальную ссылку
+    setReferralLink(`https://t.me/coindigitalbot?start=${userId}`);
+
+    // Получаем количество приглашенных пользователей из базы данных
+    const getInvitedCount = async () => {
+      const count = await fetchInvitedCount(userId);
+      setInvitedCount(count);
+    };
+
+    getInvitedCount();
+  }, [userId]);
 
   const handleShare = () => {
     alert('Ссылка на приглашение скопирована в буфер обмена!');
     navigator.clipboard.writeText(referralLink);
   };
 
-  const handleInviteFriend = () => {
-    setCoins((prevCoins) => prevCoins + 500); // Награда за приглашение
-    alert('Вы получили 500 монет за приглашение друга!');
-    setInvitationSent(true);
-  };
-
-  const handleFriendJoin = () => {
-    setCoins((prevCoins) => prevCoins + 250); // Награда для приглашенного друга
-    alert('Вы получили 250 монет за присоединение к приложению!');
-  };
-
   return (
     <div>
-      <h2>Invite Friends</h2>
-      <p>Пригласите своих друзей и получайте бонусы!</p>
+      <h2>Пригласите друзей</h2>
+      <p>Пригласите своих друзей и получайте 50 монет за каждого!</p>
       <button onClick={handleShare}>Поделиться ссылкой</button>
       <p>Ваша реферальная ссылка: {referralLink}</p>
-      
-      <h3>Введите код приглашения</h3>
-      <input
-        type="text"
-        placeholder="Введите код приглашения"
-        value={friendCode}
-        onChange={(e) => setFriendCode(e.target.value)}
-      />
-      <button onClick={handleInviteFriend} disabled={invitationSent}>
-        Пригласить друга
-      </button>
-      {invitationSent && <p>Приглашение отправлено!</p>}
-      <button onClick={handleFriendJoin}>
-        Я присоединился по коду
-      </button>
+      <p>Вы пригласили {invitedCount} пользователей.</p>
     </div>
   );
 };
